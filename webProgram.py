@@ -2,11 +2,13 @@
 # pip install langchain
 import streamlit as st
 from langchain_community.llms import OpenAI
+import streamlit as st from langchain_community.llms import OpenAI from googlesearch import search from gensim.summarization import summarize
 
-st.title('🍎🍐🍊 나의 AI Chat 🥝🍅🍆')
+st.title('📰 기사 검색 및 요약 챗봇 📝')
 
 openai_api_key = st.sidebar.text_input('OpenAI API Key')
 
+def search_and_summarize(query):
 def generate_response(input_text):
   llm = OpenAI(temperature=0.7, openai_api_key=openai_api_key)
   st.info(llm(input_text))
