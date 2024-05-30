@@ -1,21 +1,21 @@
 # 설치 필요
 # pip install langchain
-import streamlit as st
-from langchain_community.llms import OpenAI
+pip install langchain
+import streamlit as st from langchain_community.llms import OpenAI from googlesearch import search from gensim.summarization import summarize
 
-st.title('🍎🍐🍊 나의 AI Chat 🥝🍅🍆')
+st.title('📰 기사 검색 및 요약 챗봇 📝')
 
 openai_api_key = st.sidebar.text_input('OpenAI API Key')
 
-def generate_response(input_text):
-  llm = OpenAI(temperature=0.7, openai_api_key=openai_api_key)
-  st.info(llm(input_text))
+def search_and_summarize(query):
 
-with st.form('my_form'):
-  text = st.text_area('Enter text:', '무엇을 도와드릴까요?')
-  submitted = st.form_submit_button('Submit')
-  if not openai_api_key.startswith('sk-'):
-    st.warning('OpenAI API 인증키를 입력해 주세요!', icon='⚠')
-  if submitted and openai_api_key.startswith('sk-'):
-    
-    generate_response(text)
+기사 검색
+results = list(search(query, tld="co.in", num=10, stop=10, pause=2)) st.info('🔍 검색 결과:') for i, result in enumerate(results): st.write(f'{i+1}. {result}')
+
+기사 요약
+article = st.selectbox('📝 기사 선택:', results) st.info('📃 기사 요약:') summary = summarize(article) st.write(summary)
+
+AI Chat
+llm = OpenAI(temperature=0.7, openai_api_key=openai_api_key) st.info(llm(summary))
+
+with st.form('my_form'): text = st.text_input('Enter
